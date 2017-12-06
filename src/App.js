@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-// import Edit from './components/Edit'
 import Show from './components/Show'
 import EditFirst from './components/EditFirst'
 import EditLast from './components/EditLast'
@@ -12,8 +11,9 @@ class App extends Component {
     user: {
       firstName: 'Alice',
       lastName: 'Jones',
-      profileImageURL: 'https://randomuser.me/api/portraits/women/50.jpg'
-    }
+      profileImageURL: 'https://randomuser.me/api/portraits/women/50.jpg',
+    },
+      isShowOn: true
   }
 
   // Controller actions
@@ -72,19 +72,36 @@ class App extends Component {
     })
   }
 
+  handleToggle = (event) => {
+
+    this.setState(prevState => ({
+      isShowOn: !prevState.isShowOn
+    }));
+}
 
 
   // View
 
   render() {
     const user = this.state.user
+    let { isShowOn } = this.state
+
 
     return (
       <div className="App">
       <Show {...user}/>
-      <EditFirst {...user} onChangeFirstName={(event) => {this.onChangeFirstName(event)}} />
-      <EditLast {...user} onChangeLastName={(event) => {this.onChangeLastName(event)}}/>
-      <EditUrl {...user} onChangeprofileImageURL={(event) => {this.onChangeprofileImageURL(event)}}/>
+      <button type="button" onClick={this.handleToggle} >
+        {isShowOn ? 'Edit' : 'Show'}
+      </button>
+      {
+        isShowOn
+        ? null :
+        <div>
+          <EditFirst {...user} onChangeFirstName={(event) => {this.onChangeFirstName(event)}} />
+          <EditLast {...user} onChangeLastName={(event) => {this.onChangeLastName(event)}}/>
+          <EditUrl {...user} onChangeprofileImageURL={(event) => {this.onChangeprofileImageURL(event)}}/>
+        </div>
+      }
       </div>
     );
   }

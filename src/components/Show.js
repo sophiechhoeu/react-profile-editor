@@ -4,7 +4,7 @@ const Show = ({ profileImageURL, firstName, lastName}) => {
   return (
     <div>
     <h1>LinkedIn Profile Editor</h1>
-    <img src={profileImageURL} />
+    <img src={profileImageURL} alt=""/>
     <p>Name: {firstName } {lastName } </p>
   </div>
   )
